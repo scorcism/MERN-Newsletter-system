@@ -18,10 +18,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.use("/api/auth", require('./api/routes/v1/auth'));
-app.use("/api/audience", require('./api/routes/v1/audience'));
-app.use("/api/audience-type", require('./api/routes/v1/audienceType'));
-app.use("/api/contact", require('./api/routes/v1/contact'));
+app.use("/api/", require('../src/api/routes/index'));
 
 app.listen(PORT, () => {
     console.log(`Application listening on port ${PORT}`)
