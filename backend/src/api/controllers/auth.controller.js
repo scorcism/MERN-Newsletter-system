@@ -1,20 +1,26 @@
 const { validationResult } = require('express-validator');
-const { loginUser } = require('../services/auth.service');
 const { ERROR_MESSAGE } = require('../../config/constants');
-const { ERROR_RESPONSE } = require('../../utility/helper');
+const httpStatus = require('http-status');
+const { debugLog, ERROR_RESPONSE } = require('../../utility/helper');
 
 const health = (req, res) => {
     res.send('Auth controller health');
 };
 
 const login = async (req, res) => {
-    // Validate body
+    debugLog('Im here in login');
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(ERROR_RESPONSE(ERROR_MESSAGE[8002], errors));
+        res.status(400).json(ERROR_RESPONSE(400, 8002, errors));
     }
-    const response = await loginUser(req.body);
-    console.log('response: ', response);
+
+    try {
+
+        
+    } catch (error) {
+        debugLog('Login error: ', error);
+        res.status(500).json(ERROR_RESPONSE(500, 8001));
+    }
 };
 
 const register = (req, res) => {
