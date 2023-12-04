@@ -1,7 +1,6 @@
-export const PI = 3.1425
+const PI = 3.1425;
 
-
-export const SUCCESS_MESSAGE = {
+const SUCCESS_MESSAGE = {
     7001: 'Login Success',
     7002: '',
     7003: '',
@@ -12,11 +11,11 @@ export const SUCCESS_MESSAGE = {
     7008: '',
     7009: '',
     7010: '',
-}
+};
 
-export const ERROR_MESSAGE = {
+const ERROR_MESSAGE = {
     8001: 'Internal Server Error',
-    8002: '',
+    8002: 'Check Input Fields',
     8003: '',
     8004: '',
     8005: '',
@@ -25,4 +24,10 @@ export const ERROR_MESSAGE = {
     8008: '',
     8009: '',
     8010: '',
-}
+};
+
+module.exports = {
+    PI,
+    SUCCESS_MESSAGE,
+    ERROR_MESSAGE,
+};
