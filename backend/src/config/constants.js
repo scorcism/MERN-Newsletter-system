@@ -2,8 +2,8 @@ const PI = 3.1425;
 
 const SUCCESS_MESSAGE = {
     7001: 'Login Success',
-    7002: '',
-    7003: '',
+    7002: 'Registration complete, verify your email',
+    7003: 'Account verified, Please login',
     7004: '',
     7005: '',
     7006: '',
@@ -16,9 +16,9 @@ const SUCCESS_MESSAGE = {
 const ERROR_MESSAGE = {
     8001: 'Internal Server Error',
     8002: 'Check Input Fields',
-    8003: '',
-    8004: '',
-    8005: '',
+    8003: 'Invalid Credentials',
+    8004: 'Passwords do not match',
+    8005: 'User already exists',
     8006: '',
     8007: '',
     8008: '',

@@ -1,4 +1,5 @@
-const { ERROR_MESSAGE } = require('../../config/constants');
+const { ERROR_MESSAGE, SUCCESS_MESSAGE } = require('../../config/constants');
+const httpStatus = require('http-status');
 
 const debugLog = (...log) => {
     if (process.env.NODE_ENV == 'local') {
@@ -19,7 +20,7 @@ const ERROR_RESPONSE = (status, code, error = null) => {
           }
         : {
               status_code: status,
-              message: ERROR_MESSAGE[code],
+              message: httpStatus[status],
               data: {},
               error: {
                   code: code,
@@ -27,7 +28,17 @@ const ERROR_RESPONSE = (status, code, error = null) => {
               },
           };
 };
+const SUCCESS_RESPONSE = (status = 200, code, data = null) => {
+    return {
+        status_code: status,
+        message: SUCCESS_MESSAGE[code],
+        data: { ...data },
+        error: {},
+    };
+};
 
 module.exports = {
-    debugLog, ERROR_RESPONSE
-}
+    debugLog,
+    ERROR_RESPONSE,
+    SUCCESS_RESPONSE,
+};
