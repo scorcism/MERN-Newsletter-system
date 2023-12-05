@@ -20,6 +20,6 @@ router.post('/register', signUpValidation, register);
 router.post('/login', loginValidation, login);
 router.get('/mail-verify/:token', emailVerify);
 router.post('/forgot-password', forgotPasswordValidation, forgotPassword);
-router.post('/reset-password/:id/:token', resetPassword);
+router.post('/reset-password/:token', resetPassword);
 
 module.exports = router;
