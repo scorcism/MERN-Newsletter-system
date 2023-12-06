@@ -23,14 +23,14 @@ const login = async (req, res) => {
         const user = await User.findOne({ email: email, isVerified: 1 }).select('+password');
 
         if (!user) {
-            return res.status(httpStatus.BAD_REQUEST).json(ERROR_MESSAGE(400, 8003));
+            return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
         }
 
         // compare password
         const passwordCompare = await bcrypt.compare(password, user.password);
 
         if (!passwordCompare) {
-            return res.status(httpStatus.BAD_REQUEST).json(ERROR_MESSAGE(400, 8003));
+            return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
         }
         // save id in token
         let data = {
@@ -43,6 +43,7 @@ const login = async (req, res) => {
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7001, authtoken)).end();
     } catch (error) {
+        console.log('Login error: ', error);
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
     }
 };
@@ -84,10 +85,9 @@ const register = async (req, res) => {
 
             // send mail
             sendMail(email, mailSubject, content);
-            // Abhishek pathak - scorcism
         }
 
-        return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7001));
+        return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7002));
     } catch (error) {
         debugLog('Register error: ', error);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
