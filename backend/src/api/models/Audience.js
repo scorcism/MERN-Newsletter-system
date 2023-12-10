@@ -5,13 +5,13 @@ const audienceSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    user: {
-        type: mongoose.Schema.typeof.ObjectId,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    audienceType: [
+    audienceTypeId: [
         {
-            type: mongoose.Schema.typeof.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'AudienceType'
         }
     ]

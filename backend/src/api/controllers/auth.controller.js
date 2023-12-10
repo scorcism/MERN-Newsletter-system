@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { ERROR_MESSAGE } = require('../../config/constants');
 const httpStatus = require('http-status');
-const { debugLog, ERROR_RESPONSE, SUCCESS_RESPONSE } = require('../../utility/helper');
+const { ERROR_RESPONSE, SUCCESS_RESPONSE } = require('../../utility/helper');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
@@ -89,7 +89,6 @@ const register = async (req, res) => {
 
         return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7002));
     } catch (error) {
-        debugLog('Register error: ', error);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
     }
 };
@@ -116,7 +115,6 @@ const emailVerify = async (req, res) => {
             return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8006));
         }
     } catch (error) {
-        debugLog('Verify mail: ', error);
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8006));
     }
 };

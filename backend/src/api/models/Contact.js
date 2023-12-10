@@ -9,13 +9,13 @@ const contactSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    user: {
-        type: mongoose.Schema.typeof.ObjectId,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
     audiences: [
         {
-            type: mongoose.Schema.typeof.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Audience'
         }
     ]

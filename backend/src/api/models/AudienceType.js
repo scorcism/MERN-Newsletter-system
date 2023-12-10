@@ -1,16 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const audienceTypeSchema = new mongoose.Schema({
-    typeName: {
-        type: String,
-        require: true
+const audienceTypeSchema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            unique: true,
+            require: true,
+        },
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        },
     },
-    user: {
-        type: mongoose.Schema.typeof.ObjectId,
-        ref: 'User'
-    }
-}, { timestamps: true })
+    { timestamps: true },
+);
 
 const User = mongoose.model('AudienceType', audienceTypeSchema);
 module.exports = User;
-
