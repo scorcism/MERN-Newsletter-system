@@ -79,7 +79,7 @@ const register = async (req, res) => {
             let mailSubject = 'Email Verification - scor32kChimp';
             let content = `
                     <p>Hi ${email} </p>\
-                        Please <a href="${process.env.APP_URL}/api/auth/mail-verify?token=${user._id}">Verify</a> \
+                        Please <a href="${process.env.FRONTEND_URL}/api/auth/mail-verify/${user._id}">Verify</a> \
                     <b>Thank you</b>
                     `;
 
@@ -97,7 +97,7 @@ const register = async (req, res) => {
 const emailVerify = async (req, res) => {
     let userId = req.params.token;
     if (!userId) {
-        return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8001));
+        return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8006));
     }
 
     try {
@@ -105,7 +105,7 @@ const emailVerify = async (req, res) => {
         // console.log("user::" + user);
 
         if (!user) {
-            return res.status(httpStatus.NOT_FOUND).json(ERROR_RESPONSE(400, 8003));
+            return res.status(httpStatus.NOT_FOUND).json(ERROR_RESPONSE(400, 8006));
         }
 
         let verify = await User.updateOne({ _id: userId }, { $set: { isVerified: 1 } });
@@ -113,7 +113,7 @@ const emailVerify = async (req, res) => {
         if (verify) {
             return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7003));
         } else {
-            return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
+            return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8006));
         }
     } catch (error) {
         debugLog('Verify mail: ', error);
@@ -166,16 +166,15 @@ const resetPassword = async (req, res) => {
     const { id, token } = req.params;
 
     const { password, cpassword } = req.body;
-    if (password.length < 7 || cpassword.length < 7) {
-        return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8004));
-    }
-    if (password !== cpassword) {
+    console.log(password, cpassword)
+
+    if (password != cpassword) {
         return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8004));
     }
 
     const checkUser = await User.findOne({ _id: id });
     if (!checkUser) {
-        return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
+        return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8006));
     }
 
     const secret = process.env.JWT_SECRET + checkUser.password;

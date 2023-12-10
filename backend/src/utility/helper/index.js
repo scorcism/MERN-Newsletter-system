@@ -32,7 +32,7 @@ const SUCCESS_RESPONSE = (status = 200, code, data = null) => {
     return {
         status_code: status,
         message: SUCCESS_MESSAGE[code],
-        data: { ...data },
+        data: { data },
         error: {},
     };
 };
