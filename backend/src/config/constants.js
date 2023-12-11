@@ -8,9 +8,11 @@ const SUCCESS_MESSAGE = {
     7005: 'Password Updated',
     7006: 'New Type Created',
     7007: 'Delete Type Success',
-    7008: 'List of All Audiences',
-    7009: '',
-    7010: '',
+    7008: 'List of All Audiences Types',
+    7009: 'New Audience Created',
+    7010: 'Audience Deleted Successfully',
+    7011: 'Audience Data Updated',
+    7012: 'List of All Audiences',
 };
 
 const ERROR_MESSAGE = {

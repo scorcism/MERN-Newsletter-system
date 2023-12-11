@@ -52,11 +52,11 @@ const deleteType = async (req, res) => {
 };
 
 // Get all types of respective audience
-const getAudiences = async (req, res) => {
+const getTypes = async (req, res) => {
     const userId = req.user;
 
     try {
-        const types = await AudienceType.find({ userId }).select("-_id -userId -createdAt -updatedAt -__v");
+        const types = await AudienceType.find({ userId }).select("-userId -createdAt -updatedAt -__v");
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7008, types));
     } catch (error) {
@@ -69,5 +69,5 @@ module.exports = {
     health,
     createType,
     deleteType,
-    getAudiences,
+    getTypes,
 };

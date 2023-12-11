@@ -13,7 +13,7 @@ const contactSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    audiences: [
+    audiencesId: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Audience'
