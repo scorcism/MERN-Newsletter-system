@@ -22,11 +22,11 @@ const ERROR_RESPONSE = (status, code, error = null) => {
               },
           };
 };
-const SUCCESS_RESPONSE = (status = 200, code, data = null) => {
+const SUCCESS_RESPONSE = (status = 200, code, data = {}) => {
     return {
         status_code: status,
         message: SUCCESS_MESSAGE[code],
-        data: data ,
+        data: data,
         error: {},
     };
 };

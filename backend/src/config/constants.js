@@ -13,6 +13,7 @@ const SUCCESS_MESSAGE = {
     7010: 'Audience Deleted Successfully',
     7011: 'Audience Data Updated',
     7012: 'List of All Audiences',
+    7013: 'Contact successfully added',
 };
 
 const ERROR_MESSAGE = {
@@ -23,7 +24,7 @@ const ERROR_MESSAGE = {
     8005: 'User already exists',
     8006: 'Token Expired',
     8007: 'Unauthorized',
-    8008: '',
+    8008: 'Account already subscribed',
     8009: '',
     8010: '',
 };

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const sendMail = require('../../utility/helper/mail/sendMail');
+const { welcomeMail, forgotPasswordMail } = require('../../utility/helper/mail/MailTemplates');
 
 const health = (req, res) => {
     res.send('Auth controller health');
@@ -76,15 +77,7 @@ const register = async (req, res) => {
         });
 
         if (user) {
-            let mailSubject = 'Email Verification - scor32kChimp';
-            let content = `
-                    <p>Hi ${email} </p>\
-                        Please <a href="${process.env.FRONTEND_URL}/api/auth/mail-verify/${user._id}">Verify</a> \
-                    <b>Thank you</b>
-                    `;
-
-            // send mail
-            sendMail(email, mailSubject, content);
+            welcomeMail(email, user._id);
         }
 
         return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7002));
@@ -143,14 +136,9 @@ const forgotPassword = async (req, res) => {
 
         const link = `${process.env.FRONTEND_URL}/new-password/${checkUser._id}/${token}`;
 
-        let subject = 'Reset Password - scor32kChimp';
-        let content = `     
-            <p>Hello ${checkUser.name}</p>
-            Reset your password: \n
-                <a href="${link}">Click here</a>
-        `;
-
-        sendMail(email, subject, content);
+        if (link) {
+            forgotPasswordMail(email, checkUser.name);
+        }
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7004));
     } catch (error) {
@@ -164,7 +152,7 @@ const resetPassword = async (req, res) => {
     const { id, token } = req.params;
 
     const { password, cpassword } = req.body;
-    console.log(password, cpassword)
+    console.log(password, cpassword);
 
     if (password != cpassword) {
         return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8004));
