@@ -14,6 +14,8 @@ const SUCCESS_MESSAGE = {
     7011: 'Audience Data Updated',
     7012: 'List of All Audiences',
     7013: 'Contact successfully added',
+    7014: 'List of all contacts',
+    7015: 'Mail sent',
 };
 
 const ERROR_MESSAGE = {

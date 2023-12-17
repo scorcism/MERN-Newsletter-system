@@ -34,8 +34,13 @@ const addNewListMemberMail = (email, name, audienceTitle) => {
     sendMail(email, subject, content);
 };
 
+const newsLetterMailTemplate = (email, subject, content) => {
+    sendMail(email, subject, content);
+};
+
 module.exports = {
     welcomeMail,
     forgotPasswordMail,
     addNewListMemberMail,
+    newsLetterMailTemplate
 };

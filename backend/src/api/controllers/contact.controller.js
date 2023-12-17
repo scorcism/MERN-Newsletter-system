@@ -48,8 +48,16 @@ const addListMember = async (req, res) => {
     }
 };
 
-const getListMember = (req, res) => {
-    res.send('All contacts');
+const getListMember = async (req, res) => {
+    const userId = req.user;
+    try {
+        let members = await Contact.find({ userId });
+
+        res.status(httpStatus.OK).json(SUCCESS_RESPONSE(httpStatus.OK, 7014, members));
+    } catch (error) {
+        console.log('Get list memeber Error: ', error);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
+    }
 };
 
 module.exports = {
