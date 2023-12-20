@@ -4,7 +4,7 @@ import AuthFormWrapper from '../../components/AuthFormWrapper'
 const Login = () => {
   return (
     <AuthFormWrapper>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, esse vitae deserunt maiores quia in beatae, sint molestiae libero perspiciatis deleniti atque!
+    <button className='btn text-neutral bg-primary'>Apple</button>
     </AuthFormWrapper>
   )
 }
