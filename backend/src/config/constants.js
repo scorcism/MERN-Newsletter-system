@@ -16,6 +16,7 @@ const SUCCESS_MESSAGE = {
     7013: 'Contact successfully added',
     7014: 'List of all contacts',
     7015: 'Mail sent',
+    7016: 'API Created',
 };
 
 const ERROR_MESSAGE = {

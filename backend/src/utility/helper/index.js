@@ -1,3 +1,5 @@
+const { createHash } = require('crypto');
+
 const { ERROR_MESSAGE, SUCCESS_MESSAGE } = require('../../config/constants');
 const httpStatus = require('http-status');
 
@@ -31,7 +33,12 @@ const SUCCESS_RESPONSE = (status = 200, code, data = {}) => {
     };
 };
 
+const generateHash = (str) => {
+    return createHash('sha256').update(str).digest('hex');
+};
+
 module.exports = {
     ERROR_RESPONSE,
     SUCCESS_RESPONSE,
+    generateHash
 };

@@ -36,7 +36,7 @@ const deleteAudience = async (req, res) => {
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7010));
     } catch (error) {
         console.error('Delete audience: ', error);
-        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
+        res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(500, 8001));
     }
 };
 
