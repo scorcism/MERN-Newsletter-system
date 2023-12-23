@@ -37,7 +37,29 @@ const sendNewsletters = async (req, res) => {
     }
 };
 
+const getStats = async (req, res) => {
+    const userId = req.user;
+
+    try {
+        // Count of contacts
+        const contacts = Contact.estimatedDocumentCount();
+        const audiences = Audience.estimatedDocumentCount();
+
+        const data = await Promise.all([contacts, audiences]);
+
+        const meta = {
+            contacts: data[0],
+            audiences: data[1],
+        };
+        res.status(httpStatus.OK).json(SUCCESS_RESPONSE(httpStatus.OK, 7017, meta));
+    } catch (error) {
+        console.log('Get stats error: ', error);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
+    }
+};
+
 module.exports = {
     health,
     sendNewsletters,
+    getStats,
 };

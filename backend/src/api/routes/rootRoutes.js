@@ -6,5 +6,6 @@ router.use('/audience', verifyUser, require('./v1/audience'));
 router.use('/audience-type', verifyUser, require('./v1/audienceType'));
 router.use('/contact', require('./v1/contact'));
 router.use('/audience-api', require('./v1/audienceApi'));
+router.use('/utils', require('./v1/utility'));
 
 module.exports = router;
