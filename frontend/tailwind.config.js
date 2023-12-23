@@ -7,6 +7,7 @@ module.exports = {
       base: ["15px", "1.25rem"],
       lg: ["20px", "1.25rem"],
       xl: ["30px", "1.15rem"],
+      "2xl": ["45px", "1.15rem"],
     },
     extend: {},
   },

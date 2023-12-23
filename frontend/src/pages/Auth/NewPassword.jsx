@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import AuthFormWrapper from "../../components/AuthFormWrapper";
+
+import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
 
 const NewPassword = () => {
   const [cred, setCred] = useState({

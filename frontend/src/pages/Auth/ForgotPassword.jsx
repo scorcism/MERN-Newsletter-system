@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AuthFormWrapper from "../../components/AuthFormWrapper";
+import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");

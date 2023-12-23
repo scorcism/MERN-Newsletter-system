@@ -1,5 +1,6 @@
 import React from "react";
-import AuthFormWrapper from "../../components/AuthFormWrapper";
+
+import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
 
 const VerifyMail = () => {
   return (

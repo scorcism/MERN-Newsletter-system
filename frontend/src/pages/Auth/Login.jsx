@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import AuthFormWrapper from "../../components/AuthFormWrapper";
+
+import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
+import { api } from "../../config/api";
 
 const Login = () => {
   const [cred, setCred] = useState({
@@ -14,8 +16,14 @@ const Login = () => {
     });
   };
 
+  const postData = async () => {
+    let res = await api("/auth/health");
+    console.log("res: ", res);
+  }
+
   const submitForm = () => {
     console.log("cred: ", cred);
+    // postData();
   };
 
   return (
