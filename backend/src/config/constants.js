@@ -18,6 +18,7 @@ const SUCCESS_MESSAGE = {
     7015: 'Mail sent',
     7016: 'API Created',
     7017: 'Statistics Data',
+    7018: 'All Apis',
 };
 
 const ERROR_MESSAGE = {
