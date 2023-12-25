@@ -5,6 +5,7 @@ import NotFound from "./components/NotFound";
 import { Provider } from "react-redux";
 import store from "./redux/store/store";
 import Alert from "./components/CommonComponents/Alert";
+import Guide from "./pages/static/Guide";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DashboardRoutes />} />
+          <Route path="/guide" element={<Guide />} />
           <Route path="/auth/*" element={<AuthRoutes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

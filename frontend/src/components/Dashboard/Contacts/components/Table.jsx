@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableBody from "./TableBody";
 
 const datas = [
@@ -7,7 +7,7 @@ const datas = [
     name: "HTML HTML",
     email: "HTML@gmail.com",
     dateJoined: "Oct 22 2023",
-    audience:"HTML",
+    audience: "HTML",
     status: 1,
   },
   {
@@ -15,7 +15,7 @@ const datas = [
     name: "CSS CSS",
     email: "CSS@gmail.com",
     dateJoined: "Oct 22 2023",
-    audience:"CSS",
+    audience: "CSS",
     status: 1,
   },
   {
@@ -23,7 +23,7 @@ const datas = [
     name: "JS JS",
     email: "JS@gmail.com",
     dateJoined: "Oct 22 2023",
-    audience:"JS",
+    audience: "JS",
     status: 1,
   },
 ];

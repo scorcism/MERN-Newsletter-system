@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboradFormWrapper from "../../../Wrappers/DashboradFormWrapper";
+import {
+  useCreateSendMailMutation,
+  useGetAudienceQuery,
+} from "../../../../redux/service/utilApi";
 
 const Form = () => {
   const [options, setOptions] = useState([
@@ -19,10 +23,34 @@ const Form = () => {
 
   const [name, setName] = useState("");
   const [selectOption, setSelectedOption] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(`<h1>Hello <b>$name</b> </h2>  
+  <p>Hope you are having a good day.</p>    <br/>
+  <p>Your signed account: <b>$email<b/><p>`);
+
+  const { data, isError, isSuccess, error } = useGetAudienceQuery();
+  const [createSendMail, createSendMailResult] = useCreateSendMailMutation();
+
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      setOptions(data.data);
+    }
+  }, [isSuccess]);
 
   const handleSelectChange = (e) => {
     setSelectedOption(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const res = await createSendMail({
+        subject: name,
+        content,
+        audienceId: selectOption,
+      });
+      console.log("apple: ", res);
+    } catch (error) {
+      console.log("error: ", error);
+    }
   };
 
   return (
@@ -33,7 +61,7 @@ const Form = () => {
           <input
             type="text"
             className="text-lg outline-none rounded-lg px-5 py-2 flex-1"
-            placeholder="Enter Name"
+            placeholder="Enter Title"
             name="type"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -46,17 +74,28 @@ const Form = () => {
               Select Audience
             </option>
             {options.map((option) => (
-              <option value={option.id}>{option.text}</option>
+              <option value={option._id}>{option.title}</option>
             ))}
           </select>
         </div>
         <div className="flex flex-row gap-10 w-[100%]">
           <div className="w-full h-full">
-            <h2>Content</h2>
+            <div className="indicator">
+              <div className="grid w-24">content</div>
+              <span
+                className="indicator-item badge badge-primary"
+                title="You can use $name and $email for the users.
+This will be replaced by the actual user name an user email"
+              >
+                note*
+              </span>
+            </div>
             <textarea
               className="textarea textarea-bordered h-full w-full"
               rows={15}
               value={content}
+              placeholder="You can use $name and $email for the users.
+              This will be replaced by the actual user name an user email"
               onChange={(e) => {
                 setContent(e.target.value);
               }}
@@ -70,7 +109,12 @@ const Form = () => {
             />
           </div>
         </div>
-        <button className="border-2 py-3 bg-primary rounded-lg text-accent text-lg font-extrabold ">Submit</button>
+        <button
+          onClick={handleSubmit}
+          className="border-2 py-3 bg-primary rounded-lg text-accent text-lg font-extrabold "
+        >
+          Submit
+        </button>
       </div>
     </DashboradFormWrapper>
   );

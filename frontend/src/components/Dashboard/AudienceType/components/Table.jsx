@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableBody from "./TableBody";
+import { useGetAudienceQuery } from "../../../../redux/service/utilApi";
 
 const datas = [
   {
@@ -25,6 +26,16 @@ const datas = [
 ];
 
 const Table = () => {
+  const [audienceTypes, setAudienceTypes] = useState([]);
+
+  const { data, isError, isLoading, isSuccess } = useGetAudienceQuery();
+
+  useEffect(() => {
+    if (isSuccess && !isLoading) {
+      setAudienceTypes(data.data);
+    }
+  }, [isError, isLoading]);
+
   return (
     <div className="overflow-x-auto h-full ">
       <table className="table text-lg border-2 border-accent ">
@@ -35,8 +46,8 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {datas.map((data) => (
-            <TableBody data={data}/>
+          {audienceTypes.map((data) => (
+            <TableBody data={data} />
           ))}
         </tbody>
       </table>

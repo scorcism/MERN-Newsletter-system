@@ -14,10 +14,15 @@ const createType = async (req, res) => {
     const { type } = req.body;
 
     // create audience with the type
-    console.log(userId, type);
 
     // Audience type must be unique to respective user  user
     try {
+        const checkType = await AudienceType.findOne({ title: type });
+
+        if (checkType) {
+            return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8009));
+        }
+
         const newType = await AudienceType.create({
             title: type,
             userId,
@@ -35,13 +40,13 @@ const createType = async (req, res) => {
 const deleteType = async (req, res) => {
     const userId = req.user;
 
-    const { type } = req.body;
+    const { typeId } = req.body;
 
     // Audience type must be unique to respective user  user
     try {
         const del = await AudienceType.deleteOne({
+            _id: typeId,
             userId,
-            title: type,
         });
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7007, del.deletedCount));
@@ -56,7 +61,9 @@ const getTypes = async (req, res) => {
     const userId = req.user;
 
     try {
-        const types = await AudienceType.find({ userId }).select("-userId -createdAt -updatedAt -__v");
+        const types = await AudienceType.find({ userId }).select(
+            '-userId -createdAt -updatedAt -__v',
+        );
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7008, types));
     } catch (error) {

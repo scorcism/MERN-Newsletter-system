@@ -1,10 +1,23 @@
 import React from "react";
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
+import { useDeleteAudienceTypeMutation } from "../../../../redux/service/utilApi";
 
 const TableBody = ({ data }) => {
-  const handleDelete = (id) => {
-    console.log("handle delete: ", id);
+  const [deleteAudienceType, deleteAudienceTypeResult] =
+    useDeleteAudienceTypeMutation();
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await deleteAudienceType({
+        typeId: id,
+      });
+
+      console.log("res: ", res);
+    } catch (error) {
+      console.log("erorr: ", error);
+    }
   };
+  
 
   const handleEdit = (id) => {
     console.log("handle delete: ", id);
@@ -12,14 +25,14 @@ const TableBody = ({ data }) => {
 
   return (
     <tr>
-      <td>{data.name}</td>
+      <td>{data.title}</td>
       <td className="flex flex-row gap-5">
-        <p className="cursor-pointer" onClick={() => handleEdit(data.id)}>
+        <p className="cursor-pointer" onClick={() => handleEdit(data._id)}>
           <FaRegPenToSquare />
         </p>
         <p
           className="cursor-pointer text-red-900"
-          onClick={() => handleDelete(data.id)}
+          onClick={() => handleDelete(data._id)}
         >
           <FaRegTrashCan />
         </p>

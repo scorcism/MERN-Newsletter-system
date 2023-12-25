@@ -17,6 +17,17 @@ const createApi = async (req, res) => {
         if (!audience) {
             return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
         }
+
+        // If api key already present then return the same one
+        const checkAPiExists = await AudienceApi.findOne({
+            audienceId,
+        });
+        if (checkAPiExists) {
+            return res.status(200).json(
+                SUCCESS_RESPONSE(httpStatus.OK, 7016, { apiKey: checkAPiExists.key }),
+            );
+        }
+
         // Generate API
         const apiKey = generateHash(audienceId);
 
@@ -33,7 +44,7 @@ const createApi = async (req, res) => {
     }
 };
 
-// TODO: 
+// TODO:
 const getAPis = async (req, res) => {
     const userId = req.user;
 

@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const Audience = require('../models/Audience');
-const { SUCCESS_RESPONSE } = require('../../utility/helper');
+const { SUCCESS_RESPONSE, ERROR_RESPONSE } = require('../../utility/helper');
 
 const health = (req, res) => {
     res.send('Audience controller health');
@@ -10,6 +10,11 @@ const createAudience = async (req, res) => {
     const userId = req.user;
 
     const { title, audienceTypes } = req.body;
+
+    const checkAudience = await Audience.findOne({ title, userId });
+    if (checkAudience) {
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8010));
+    }
 
     try {
         await Audience.create({
@@ -68,7 +73,9 @@ const getAudiences = async (req, res) => {
     const userId = req.user;
 
     try {
-        let audiences = await Audience.find({ userId }).select("-createdAt -updatedAt -__v -userId");
+        let audiences = await Audience.find({ userId }).select(
+            '-createdAt -updatedAt -__v -userId -audienceTypeId',
+        );
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7012, audiences));
     } catch (error) {

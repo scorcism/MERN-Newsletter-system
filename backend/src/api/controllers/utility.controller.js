@@ -43,7 +43,7 @@ const getStats = async (req, res) => {
     try {
         // Count of contacts
         const contacts = Contact.estimatedDocumentCount();
-        const audiences = Audience.estimatedDocumentCount();
+        const audiences = Audience.estimatedDocumentCount({userId});
 
         const data = await Promise.all([contacts, audiences]);
 

@@ -30,8 +30,8 @@ const ERROR_MESSAGE = {
     8006: 'Token Expired',
     8007: 'Unauthorized',
     8008: 'Account already subscribed',
-    8009: '',
-    8010: '',
+    8009: 'Audience Type already exists',
+    8010: 'Audience already exists',
 };
 
 module.exports = {

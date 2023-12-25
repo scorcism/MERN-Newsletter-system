@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
 const connectToMongo = require('./config/dbConnect');
 
 const PORT = process.env.PORT || 8080;
@@ -9,7 +10,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 connectToMongo();

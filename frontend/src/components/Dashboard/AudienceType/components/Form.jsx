@@ -1,12 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboradFormWrapper from "../../../Wrappers/DashboradFormWrapper";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../../../redux/features/ComponentsRender.slice";
+import { useCreateAudienceTypeMutation } from "../../../../redux/service/utilApi";
 
 const Form = () => {
   const [type, setType] = useState("");
 
   const dispatch = useDispatch();
+
+  const [createAudienceType, { isLoading, isError, error }] =
+    useCreateAudienceTypeMutation();
+
+  const handleFormSubmit = async () => {
+    try {
+      const res = await createAudienceType(type);
+      setType("");
+      dispatch(showAlert({ alert_type: "success", text: res.data.data.data }));
+    } catch (error) {
+      dispatch(
+        showAlert({ alert_type: "error", text: "Internal server error" })
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (isError && !isLoading) {
+      setType("");
+      dispatch(
+        showAlert({ alert_type: "error", text: error.data.error.error })
+      );
+    }
+  }, [isLoading]);
 
   return (
     <DashboradFormWrapper>
@@ -24,9 +49,7 @@ const Form = () => {
         />
         <button
           className="border-2 py-2 rounded-lg bg-primary text-accent text-bold"
-          onClick={() =>
-            dispatch(showAlert({ alert_type: "success", text: "Lorem ipsum dolor sit  " }))
-          }
+          onClick={handleFormSubmit}
         >
           Create Type
         </button>
