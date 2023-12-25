@@ -1,12 +1,10 @@
 const { validationResult } = require('express-validator');
-const { ERROR_MESSAGE } = require('../../config/constants');
 const httpStatus = require('http-status');
 const { ERROR_RESPONSE, SUCCESS_RESPONSE } = require('../../utility/helper');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const sendMail = require('../../utility/helper/mail/sendMail');
-const { welcomeMail, forgotPasswordMail } = require('../../utility/helper/mail/MailTemplates');
+const { verifyAccount, forgotPasswordMail } = require('../../utility/helper/mail/MailTemplates');
 
 const health = (req, res) => {
     res.send('Auth controller health');
@@ -42,7 +40,9 @@ const login = async (req, res) => {
 
         let authtoken = jwt.sign(data, process.env.JWT_SECRET);
 
-        res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7001, authtoken)).end();
+        res.status(httpStatus.OK)
+            .json(SUCCESS_RESPONSE(201, 7001, { token: authtoken, email: email }))
+            .end();
     } catch (error) {
         console.log('Login error: ', error);
         res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
@@ -77,7 +77,7 @@ const register = async (req, res) => {
         });
 
         if (user) {
-            welcomeMail(email, user._id);
+            verifyAccount(email, user._id);
         }
 
         return res.status(httpStatus.OK).json(SUCCESS_RESPONSE(201, 7002));
@@ -134,10 +134,10 @@ const forgotPassword = async (req, res) => {
             expiresIn: `${process.env.RESET_PASSWORD_DURATION}h`,
         });
 
-        const link = `${process.env.FRONTEND_URL}/new-password/${checkUser._id}/${token}`;
+        const link = `${process.env.FRONTEND_URL}/auth/new-password/${checkUser._id}/${token}`;
 
         if (link) {
-            forgotPasswordMail(email, checkUser.name);
+            forgotPasswordMail(email, checkUser.name, link);
         }
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7004));

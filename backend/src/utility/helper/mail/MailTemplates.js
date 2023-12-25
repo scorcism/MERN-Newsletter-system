@@ -1,10 +1,10 @@
 const sendMail = require('./sendMail');
 
-const welcomeMail = async (email, id) => {
+const verifyAccount = async (email, id) => {
     let mailSubject = 'Email Verification - scor32kChimp';
     let content = `
             <p>Hi ${email} </p>\
-                Please <a href="${process.env.FRONTEND_URL}/api/auth/mail-verify/${id}">Verify</a> \
+                Please <a href="${process.env.FRONTEND_URL}/auth/mail-verify/${id}">Verify</a> \
             <b>Thank you</b>
             `;
 
@@ -12,7 +12,7 @@ const welcomeMail = async (email, id) => {
     sendMail(email, mailSubject, content);
 };
 
-const forgotPasswordMail = (email, name) => {
+const forgotPasswordMail = (email, name, link) => {
     let subject = 'Reset Password - scor32kChimp';
     let content = `     
         <p>Hello ${name}</p>
@@ -39,8 +39,8 @@ const newsLetterMailTemplate = (email, subject, content) => {
 };
 
 module.exports = {
-    welcomeMail,
+    verifyAccount,
     forgotPasswordMail,
     addNewListMemberMail,
-    newsLetterMailTemplate
+    newsLetterMailTemplate,
 };
