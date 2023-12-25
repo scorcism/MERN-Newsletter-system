@@ -1,7 +1,6 @@
 import React from "react";
 
 const Head = ({ changeToRender, toRender }) => {
-
   return (
     <div className="flex flex-row justify-start items-start gap-10 h-[10%]">
       <p
@@ -10,7 +9,7 @@ const Head = ({ changeToRender, toRender }) => {
           toRender.form === true ? "border-black" : ""
         }`}
       >
-        Create API
+        Create Audience
       </p>
       <p
         onClick={() => changeToRender("table")}
@@ -18,7 +17,7 @@ const Head = ({ changeToRender, toRender }) => {
           toRender.table === true ? "border-black" : ""
         }`}
       >
-        List APIs
+        List Audiences
       </p>
     </div>
   );

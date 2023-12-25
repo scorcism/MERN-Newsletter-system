@@ -3,7 +3,7 @@ import Table from "./components/Table";
 
 const Body = () => {
   return (
-    <div>
+    <div className="h-[85%]">
       <Table />
     </div>
   );

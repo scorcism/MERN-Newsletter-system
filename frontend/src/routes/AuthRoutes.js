@@ -12,8 +12,8 @@ const AuthRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/new-password" element={<NewPassword />} />
-      <Route path="/verify-mail" element={<VerifyMail />} />
+      <Route path="/new-password/:id/:token" element={<NewPassword />} />
+      <Route path="/mail-verify/:id" element={<VerifyMail />} />
     </Routes>
   );
 };

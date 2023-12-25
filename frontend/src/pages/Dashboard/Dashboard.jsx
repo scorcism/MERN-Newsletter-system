@@ -8,10 +8,12 @@ import Contacts from "../../components/Dashboard/Contacts/Contacts";
 import SendNewsLetters from "../../components/Dashboard/SendNewsLetters/SendNewsLetters";
 import { useSelector } from "react-redux";
 import Home from "../../components/Dashboard/Home/Home";
-import Alert from "../../components/CommonComponents/Alert";
+import useIsAuthenticated from "../../hooks/useIsAuthenticated";
 
 const Dashboard = () => {
   const toRender = useSelector((state) => state.components.toRender);
+
+  const { data } = useIsAuthenticated();
 
   return (
     <div className="flex bg-[#595F72] h-[92vh] w-[100vw]">
@@ -26,7 +28,6 @@ const Dashboard = () => {
         {toRender.contacts && <Contacts />}
         {toRender.send_news_letters && <SendNewsLetters />}
       </MainSectionWrapper>
-      <Alert />
     </div>
   );
 };

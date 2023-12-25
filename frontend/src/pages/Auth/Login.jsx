@@ -2,12 +2,20 @@ import React, { useState } from "react";
 
 import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
 import { api } from "../../config/api";
+import { validateEmail } from "../../helpers";
+import { showAlert } from "../../redux/features/ComponentsRender.slice";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { logginUser } from "../../redux/features/userAuth.slice";
 
 const Login = () => {
   const [cred, setCred] = useState({
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   const handleChange = (e) => {
     setCred({
@@ -15,15 +23,46 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const validateForm = (cred) => {
+    if (!validateEmail(cred.email)) {
+      dispatch(showAlert({ alert_type: "error", text: "Enter valid email" }));
+      return true;
+    }
+  };
 
   const postData = async () => {
-    let res = await api("/auth/health");
-    console.log("res: ", res);
-  }
+    let res = await api.post("/auth/login", {
+      ...cred,
+    });
+    return res;
+  };
 
-  const submitForm = () => {
-    console.log("cred: ", cred);
-    // postData();
+  const submitForm = async () => {
+    if (validateForm(cred)) {
+      return;
+    } else {
+      try {
+        let response = await postData();
+        let successMessage = response.data.message;
+        let data = response.data.data;
+
+        Cookies.set("AUTH_TOKEN", data.token);
+        Cookies.set("AUTH_EMAIL", data.email);
+
+        dispatch(showAlert({ alert_type: "success", text: successMessage }));
+        dispatch(logginUser({ token: data.token, email: data.email }));
+        
+        navigation("/");
+      } catch (error) {
+        let errorMessage = error.response.data.message;
+        dispatch(
+          showAlert({
+            alert_type: "error",
+            text: `${errorMessage ? errorMessage : "Internal server error"}`,
+          })
+        );
+      }
+    }
   };
 
   return (

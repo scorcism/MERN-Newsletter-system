@@ -1,11 +1,51 @@
 import React, { useState } from "react";
 import AuthFormWrapper from "../../components/Wrappers/AuthFormWrapper";
+import { validateEmail } from "../../helpers";
+import { api } from "../../config/api";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../../redux/features/ComponentsRender.slice";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
-  const submitForm = () => {
-    console.log(email);
+  const dispatch = useDispatch();
+  const validateForm = (email) => {
+    if (!validateEmail(email)) {
+      dispatch(showAlert({ alert_type: "error", text: "Enter valid email" }));
+      return true;
+    }
+  };
+
+  const postData = async () => {
+    let res = await api.post("/auth/forgot-password", {
+      email,
+    });
+    return res;
+  };
+
+  const submitForm = async () => {
+    if (validateForm(email)) {
+      return;
+    } else {
+      try {
+        let response = await postData();
+        let successMessage = response.data.message;
+        dispatch(
+          showAlert({
+            alert_type: "success",
+            text: successMessage,
+          })
+        );
+      } catch (error) {
+        let errorMessage = error.response.data.message;
+        dispatch(
+          showAlert({
+            alert_type: "error",
+            text: `${errorMessage ? errorMessage : "Internal server error"}`,
+          })
+        );
+      }
+    }
   };
 
   return (
@@ -23,7 +63,10 @@ const ForgotPassword = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <button onClick={submitForm} className="btn btn-primary text-lg no-animation hover:text-white/80 mb-2">
+        <button
+          onClick={submitForm}
+          className="btn btn-primary text-lg no-animation hover:text-white/80 mb-2"
+        >
           Sent Mail..
         </button>
         <h2 className="text-sm">

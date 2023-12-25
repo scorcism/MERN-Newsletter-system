@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Head from "../Audience/Head";
+import Head from "./Head";
 import Body from "./Body";
 
 const APIs = () => {

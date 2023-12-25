@@ -1,7 +1,12 @@
-const Axios = require("axios");
+import axios from "axios";
 
-// const api = Axios.create({
-//   baseURL: process.env.REACT_APP_BACKEND_URL,
-// });
-
-// module.exports = { api };
+export const api = axios.create(
+  {
+    baseURL: `http://localhost:8080/api`,
+  },
+  {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }
+);

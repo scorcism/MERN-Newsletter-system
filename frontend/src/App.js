@@ -2,16 +2,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardRoutes from "./routes/DashboardRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
 import NotFound from "./components/NotFound";
+import { Provider } from "react-redux";
+import store from "./redux/store/store";
+import Alert from "./components/CommonComponents/Alert";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<DashboardRoutes />} />
-        <Route path="/auth/*" element={<AuthRoutes />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<DashboardRoutes />} />
+          <Route path="/auth/*" element={<AuthRoutes />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+      <Alert />
+    </Provider>
   );
 };
 
