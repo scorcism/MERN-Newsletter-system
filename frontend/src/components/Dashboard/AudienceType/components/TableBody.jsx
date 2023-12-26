@@ -1,26 +1,48 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaRegTrashCan, FaRegPenToSquare } from "react-icons/fa6";
 import { useDeleteAudienceTypeMutation } from "../../../../redux/service/utilApi";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../../../../redux/features/ComponentsRender.slice";
 
 const TableBody = ({ data }) => {
   const [deleteAudienceType, deleteAudienceTypeResult] =
     useDeleteAudienceTypeMutation();
 
-  const handleDelete = async (id) => {
-    try {
-      const res = await deleteAudienceType({
-        typeId: id,
-      });
+  const dispatch = useDispatch();
 
-      console.log("res: ", res);
-    } catch (error) {
-      console.log("erorr: ", error);
+  const handleDelete = async (id, title) => {
+    if (window.confirm(`are you sure you want to delete ${title} type`)) {
+      try {
+        const res = await deleteAudienceType({
+          typeId: id,
+        });
+      } catch (error) {
+        dispatch(
+          showAlert({
+            alert_type: "error",
+            text: `Some Error occured, please reaload`,
+          })
+        );
+      }
     }
   };
-  
+
+  useEffect(() => {
+    if (
+      deleteAudienceTypeResult.isSuccess &&
+      !deleteAudienceTypeResult.isLoading
+    ) {
+      dispatch(
+        showAlert({
+          alert_type: "success",
+          text: `Deleted audience type ${data.title}`,
+        })
+      );
+    }
+  }, [deleteAudienceTypeResult.isSuccess]);
 
   const handleEdit = (id) => {
-    console.log("handle delete: ", id);
+    console.log("handle edit: ", id);
   };
 
   return (
@@ -32,7 +54,7 @@ const TableBody = ({ data }) => {
         </p>
         <p
           className="cursor-pointer text-red-900"
-          onClick={() => handleDelete(data._id)}
+          onClick={() => handleDelete(data._id, data.title)}
         >
           <FaRegTrashCan />
         </p>

@@ -1,25 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TableBody from "./TableBody";
-
-const datas = [
-  {
-    id: "1ajsgasa75s7a6sas",
-    name: "Learn HTML in 5 days",
-    audienceType: "HTML",
-  },
-  {
-    id: "2ajsgasa75s7a6sas",
-    name: "Learn CSS in 5 days",
-    audienceType: "CSS",
-  },
-  {
-    id: "3ajsgasa75s7a6sas",
-    name: "Learn JS in 5 days",
-    audienceType: "JS",
-  },
-];
+import { useGetAudienceQuery } from "../../../../redux/service/utilApi";
 
 const Table = () => {
+  const [audiences, setAudiences] = useState([]);
+
+  const { data, isError, isLoading, isSuccess } = useGetAudienceQuery();
+
+  useEffect(() => {
+    if (isSuccess && !isLoading) {
+      setAudiences(data.data);
+    }
+  }, [isError, isLoading]);
+
+  console.log("data: ", data);
+
   return (
     <div className="overflow-x-auto h-full ">
       <table className="table text-lg border-2 border-accent">
@@ -31,7 +26,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {datas.map((data) => (
+          {audiences.map((data) => (
             <TableBody data={data} />
           ))}
         </tbody>

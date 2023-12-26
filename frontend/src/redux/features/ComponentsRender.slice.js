@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 // Initial Value
 const initialState = {
@@ -23,6 +24,11 @@ export const componentsSlice = createSlice({
   reducers: {
     setToRender: (state, action) => {
       let actionType = action.payload;
+      // if (!Cookies.get("LAST_VISITED_PAGE") !== actionType) {
+      //   Cookies.set("LAST_VISITED_PAGE", actionType);
+      // }else{
+
+      // }
       let tmp = {
         home: actionType === "home",
         audience_type: actionType === "audience_type",

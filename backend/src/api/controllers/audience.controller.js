@@ -73,9 +73,10 @@ const getAudiences = async (req, res) => {
     const userId = req.user;
 
     try {
-        let audiences = await Audience.find({ userId }).select(
-            '-createdAt -updatedAt -__v -userId -audienceTypeId',
-        );
+        let audiences = await Audience.find({ userId })
+            .select('-createdAt -updatedAt -__v -userId ')
+            .populate({ path: 'audienceTypeId', select: 'title' });
+
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(200, 7012, audiences));
     } catch (error) {

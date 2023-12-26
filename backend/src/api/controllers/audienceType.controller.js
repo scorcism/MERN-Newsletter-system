@@ -12,9 +12,7 @@ const createType = async (req, res) => {
     const userId = req.user;
 
     const { type } = req.body;
-
-    // create audience with the type
-
+    
     // Audience type must be unique to respective user  user
     try {
         const checkType = await AudienceType.findOne({ title: type });
@@ -41,7 +39,7 @@ const deleteType = async (req, res) => {
     const userId = req.user;
 
     const { typeId } = req.body;
-
+    
     // Audience type must be unique to respective user  user
     try {
         const del = await AudienceType.deleteOne({
@@ -58,7 +56,7 @@ const deleteType = async (req, res) => {
 
 // Get all types of respective audience
 const getTypes = async (req, res) => {
-    const userId = req.user;
+    const userId = req.user;    
 
     try {
         const types = await AudienceType.find({ userId }).select(
