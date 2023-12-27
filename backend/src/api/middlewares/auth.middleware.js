@@ -3,7 +3,6 @@ const { ERROR_RESPONSE } = require('../../utility/helper/index');
 const httpStatus = require('http-status');
 
 const verifyUser = (req, res, next) => {
-    console.log('BBBBBBBBBBBBBBBBBBBBBBBBB');
     try {
         const token = req.headers.authorization.split(' ')[1];
 

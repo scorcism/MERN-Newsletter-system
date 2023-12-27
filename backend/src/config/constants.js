@@ -19,6 +19,8 @@ const SUCCESS_MESSAGE = {
     7016: 'API Created',
     7017: 'Statistics Data',
     7018: 'All Apis',
+    7019: 'Audience Joined successfully',
+    7020: 'You have already in the audience',
 };
 
 const ERROR_MESSAGE = {
@@ -32,6 +34,7 @@ const ERROR_MESSAGE = {
     8008: 'Account already subscribed',
     8009: 'Audience Type already exists',
     8010: 'Audience already exists',
+    8010: 'Submit using API valid key',
 };
 
 module.exports = {

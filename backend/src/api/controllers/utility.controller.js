@@ -43,7 +43,38 @@ const getStats = async (req, res) => {
     try {
         // Count of contacts
         const contacts = Contact.estimatedDocumentCount();
-        const audiences = Audience.estimatedDocumentCount({userId});
+        const audiences = Audience.estimatedDocumentCount({ userId });
+        let aggr = await Contact.aggregate([
+            {
+                $lookup: {
+                    from: 'audiences',
+                    localField: 'audience_id',
+                    foreignField: 'audience_id',
+                    as: 'joinedData',
+                },
+            },
+            {
+                $unwind: '$joinedData',
+            },
+            {
+                $match: {
+                    'joinedData.user_id': 'your_specific_user_id',
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    contactCount: { $sum: 1 },
+                },
+            },
+            {
+                $project: {
+                    _id: 0,
+                    contactCount: 1,
+                },
+            },
+        ]);
+        console.log('aggr: ', aggr);
 
         const data = await Promise.all([contacts, audiences]);
 
