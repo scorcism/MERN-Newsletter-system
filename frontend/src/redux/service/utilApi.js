@@ -75,6 +75,21 @@ export const utilApi = createApi({
         body: cred,
       }),
     }),
+
+    // Get contacts
+    getContacts: builder.query({
+      query: () => "/contact/getListMembers",
+    }),
+
+    // update audience type
+    updateAudienceType: builder.mutation({
+      query: (cred) => ({
+        url: "/audience/delete-audience",
+        method: "post",
+        body: cred,
+      }),
+    })
+
   }),
 });
 
@@ -86,5 +101,6 @@ export const {
   useCreateApiMutation,
   useCreateSendMailMutation,
   useDeleteAudienceTypeMutation,
-  useDeleteAudienceMutation
+  useDeleteAudienceMutation,
+  useGetContactsQuery
 } = utilApi;

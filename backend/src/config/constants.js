@@ -20,7 +20,7 @@ const SUCCESS_MESSAGE = {
     7017: 'Statistics Data',
     7018: 'All Apis',
     7019: 'Audience Joined successfully',
-    7020: 'You have already in the audience',
+    7020: 'You are already in the audience',
 };
 
 const ERROR_MESSAGE = {

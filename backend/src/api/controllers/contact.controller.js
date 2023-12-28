@@ -8,50 +8,28 @@ const health = (req, res) => {
     res.send('Contact controller health');
 };
 
-const addListMember = async (req, res) => {
-    const { name, email, audienceId } = req.body;
-
-    try {
-        // Check if email already exist with the audience
-        const checkAcount = await Contact.findOne({ email, audienceId });
-        console.log('check Account: ', checkAcount);
-
-        if (checkAcount) {
-            return res
-                .status(httpStatus.BAD_REQUEST)
-                .json(ERROR_RESPONSE(httpStatus.BAD_REQUEST, 8008));
-        }
-
-        const addNewMember = await Contact.create({
-            name,
-            email,
-            audienceId,
-        });
-
-        // Get title of the audience
-        if (!addNewMember) {
-            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
-        }
-
-        const audienceData = await Audience.findOne({ _id: audienceId }).select('+ title');
-
-        if (!audienceData) {
-            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
-        }
-
-        addNewListMemberMail(email, name, audienceData.title);
-
-        res.status(httpStatus.OK).json(SUCCESS_RESPONSE(httpStatus.OK, 7013));
-    } catch (error) {
-        console.log('Contact Controller Error: ', error);
-        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8001));
-    }
-};
-
 const getListMember = async (req, res) => {
     const userId = req.user;
     try {
-        let members = await Contact.find({ userId });
+        // find all the contacts with the user Id, but contact only has audience id, so find contact with the audience id who are under the userId
+        // let members = await Contact.find({ userId });
+
+        const members = await Contact.aggregate([
+            {
+                $lookup: {
+                    from: 'Audience',
+                    localField: 'audienceId',
+                    foreignField: '_id',
+                    as: 'audience',
+                },
+            },
+            {
+                $match: {
+                    'audience.userId': userId,
+                },
+            },
+        ]);
+        console.log('memebers: ', members);
 
         res.status(httpStatus.OK).json(SUCCESS_RESPONSE(httpStatus.OK, 7014, members));
     } catch (error) {
@@ -62,6 +40,5 @@ const getListMember = async (req, res) => {
 
 module.exports = {
     health,
-    addListMember,
     getListMember,
 };

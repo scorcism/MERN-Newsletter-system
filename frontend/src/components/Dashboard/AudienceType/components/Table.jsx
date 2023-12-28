@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TableBody from "./TableBody";
-import {  useGetAudienceTypeQuery } from "../../../../redux/service/utilApi";
+import { useGetAudienceTypeQuery } from "../../../../redux/service/utilApi";
 
 const Table = () => {
   const [audienceTypes, setAudienceTypes] = useState([]);
@@ -12,6 +12,8 @@ const Table = () => {
       setAudienceTypes(data.data);
     }
   }, [isError, isLoading]);
+
+  console.log("audience: ", audienceTypes);
 
   return (
     <div className="overflow-x-auto h-full ">

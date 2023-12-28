@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TableBody from "./TableBody";
+import { useGetContactsQuery } from "../../../../redux/service/utilApi";
 
 const datas = [
   {
@@ -29,6 +30,18 @@ const datas = [
 ];
 
 const Table = () => {
+
+  const [contacts, setContacts] = useState([]);
+
+  const { data, isError, isSuccess, error, isLoading } = useGetContactsQuery();
+
+  useEffect(()=>{
+    if(isSuccess){
+      // setContacts(data)
+      console.log("data: ", data)
+    }
+  },[isLoading, isSuccess])
+
   return (
     <div className="overflow-x-auto h-full">
       <table className="table text-lg border-2 border-accent px-2">
