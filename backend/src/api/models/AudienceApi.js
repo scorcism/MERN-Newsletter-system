@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const audienceApiSchema = new mongoose.Schema(
-    {
+    {   
         audienceId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Audience',

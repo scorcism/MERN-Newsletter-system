@@ -14,26 +14,27 @@ const Dummy = () => {
 
   const postData = async () => {
     try {
-      let res = await axios.post(
+      let response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/root/audience-api/join`,
         cred,
         {
           headers: {
             API_KEY:
-              "5b19b70015ea2d8fc719e7affa1f38bffd97a03c89f68fbc7855abcd617d1882",
+              "199b6a86836211524f9a5f09961ad3fc336c2dbe254a6ff57b6337937b9a954e",
           },
         }
       );
-      console.log("res: ", res);
+      let res = response.data.message;
+      setMessage(res);
     } catch (error) {
-      console.log("error: ", error);
+      setMessage("Try later");
     }
   };
 
   const submitForm = () => {
-    // validate form
     postData();
   };
+
 
   return (
     <div>

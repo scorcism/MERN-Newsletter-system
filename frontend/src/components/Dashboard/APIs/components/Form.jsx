@@ -33,6 +33,7 @@ const Form = ({ toRender }) => {
       const res = await createApi({
         audienceId: selectOption,
       });
+      console.log("res: ", res);
       setApi(res.data.data.apiKey);
     } catch (error) {
       console.log("error: ", error);

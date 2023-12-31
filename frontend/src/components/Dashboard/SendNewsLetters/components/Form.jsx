@@ -4,6 +4,8 @@ import {
   useCreateSendMailMutation,
   useGetAudienceQuery,
 } from "../../../../redux/service/utilApi";
+import { useDispatch } from "react-redux";
+import { showAlert } from "../../../../redux/features/ComponentsRender.slice";
 
 const Form = () => {
   const [options, setOptions] = useState([
@@ -40,16 +42,29 @@ const Form = () => {
     setSelectedOption(e.target.value);
   };
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async () => {
     try {
-      const res = await createSendMail({
+      const response = await createSendMail({
         subject: name,
         content,
         audienceId: selectOption,
       });
-      console.log("apple: ", res);
+      let res = response.data.message;
+      dispatch(
+        showAlert({
+          alert_type: "success",
+          text: res,
+        })
+      );
     } catch (error) {
-      console.log("error: ", error);
+      dispatch(
+        showAlert({
+          alert_type: "error",
+          text: "Try later",
+        })
+      );
     }
   };
 

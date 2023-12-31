@@ -6,9 +6,5 @@ export const StatisticsItems = [
   {
     text: "Audience",
     value: 200,
-  },
-  {
-    text: "Send Mails",
-    value: 200,
-  },
+  }
 ];

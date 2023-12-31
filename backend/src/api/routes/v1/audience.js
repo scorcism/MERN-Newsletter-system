@@ -16,3 +16,4 @@ router.post('/update-audience', updateAudience);
 router.get('/audiences', getAudiences);
 
 module.exports = router;
+    

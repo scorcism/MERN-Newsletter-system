@@ -20,6 +20,10 @@ const contactSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Audience',
         },
+        userId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        }
     },
     { timeseries: true },
 );

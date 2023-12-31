@@ -11,11 +11,10 @@ const health = (req, res) => {
 const createApi = async (req, res) => {
     const { audienceId } = req.body;
     const userId = req.user;
-
     try {
         // Chek if audience exists or not
         const audience = await Audience.findOne({ _id: audienceId, userId });
-
+        console.log('audience: ', audience);
         if (!audience) {
             return res.status(httpStatus.BAD_REQUEST).json(ERROR_RESPONSE(400, 8003));
         }
@@ -24,6 +23,7 @@ const createApi = async (req, res) => {
         const checkAPiExists = await AudienceApi.findOne({
             audienceId,
         });
+
         if (checkAPiExists) {
             return res
                 .status(200)
@@ -62,10 +62,18 @@ const joinAudience = async (req, res) => {
         // get Audience Id id from key
         const audienceId = keyData.audienceId;
 
-        // Check if email already exists with email and audience
+        // Get userId of the audience
+        let user = await Audience.findById(audienceId);
+
+        if (!user) {
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(ERROR_RESPONSE(400, 8010));
+        }
+
+        // Check if email already exists with email, audience and user
         const checkMail = await Contact.findOne({
             email,
             audienceId,
+            userId: user.userId,
         });
 
         if (checkMail) {
@@ -77,6 +85,7 @@ const joinAudience = async (req, res) => {
             name,
             email,
             audienceId,
+            userId: user.userId,
         });
 
         return res.status(httpStatus.CREATED).json(SUCCESS_RESPONSE(201, 7019));

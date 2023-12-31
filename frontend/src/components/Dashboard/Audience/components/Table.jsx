@@ -13,24 +13,28 @@ const Table = () => {
     }
   }, [isError, isLoading]);
 
-  console.log("data: ", data);
+  // console.log("data: ", data);
 
   return (
     <div className="overflow-x-auto h-full ">
-      <table className="table text-lg border-2 border-accent">
-        <thead className="text-lg text-primary">
-          <tr>
-            <th>Name</th>
-            <th>Audience Type</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {audiences.map((data) => (
-            <TableBody data={data} />
-          ))}
-        </tbody>
-      </table>
+      {isSuccess == true ? (
+        <table className="table text-lg border-2 border-accent">
+          <thead className="text-lg text-primary">
+            <tr>
+              <th>Name</th>
+              <th>Audience Type</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {audiences.map((data) => (
+              <TableBody data={data} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h2>Reload the page</h2>
+      )}
     </div>
   );
 };
